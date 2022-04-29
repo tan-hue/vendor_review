@@ -1,82 +1,97 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/slatedocs/img/main/logo-slate.png" alt="Slate: API Documentation Generator" width="226">
-  <br>
-  <a href="https://github.com/slatedocs/slate/actions?query=workflow%3ABuild+branch%3Amain"><img src="https://github.com/slatedocs/slate/workflows/Build/badge.svg?branch=main" alt="Build Status"></a>
-  <a href="https://hub.docker.com/r/slatedocs/slate"><img src="https://img.shields.io/docker/v/slatedocs/slate?sort=semver" alt="Docker Version" /></a>
-</p>
+---
+title: Vendor Review
 
-<p align="center">Slate helps you create beautiful, intelligent, responsive API documentation.</p>
+language_tabs: # must be one of https://git.io/vQNgJ
+  - shell
+  - ruby
+  - python
+  - javascript
 
-<p align="center"><img src="https://raw.githubusercontent.com/slatedocs/img/main/screenshot-slate.png" width=700 alt="Screenshot of Example Documentation created with Slate"></p>
+toc_footers:
+  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
-<p align="center"><em>The example above was created with Slate. Check it out at <a href="https://slatedocs.github.io/slate">slatedocs.github.io/slate</a>.</em></p>
+includes:
+  - errors
 
-Features
-------------
+search: true
 
-* **Clean, intuitive design** — With Slate, the description of your API is on the left side of your documentation, and all the code examples are on the right side. Inspired by [Stripe's](https://stripe.com/docs/api) and [PayPal's](https://developer.paypal.com/webapps/developer/docs/api/) API docs. Slate is responsive, so it looks great on tablets, phones, and even in print.
+code_clipboard: true
 
-* **Everything on a single page** — Gone are the days when your users had to search through a million pages to find what they wanted. Slate puts the entire documentation on a single page. We haven't sacrificed linkability, though. As you scroll, your browser's hash will update to the nearest header, so linking to a particular point in the documentation is still natural and easy.
+meta:
+  - name: description
+    content: Documentation for the Vendor Review API
+---
+# Introduction
 
-* **Slate is just Markdown** — When you write docs with Slate, you're just writing Markdown, which makes it simple to edit and understand. Everything is written in Markdown — even the code samples are just Markdown code blocks.
+This API request help you retrieve all the vendor's review
 
-* **Write code samples in multiple languages** — If your API has bindings in multiple programming languages, you can easily put in tabs to switch between them. In your document, you'll distinguish different languages by specifying the language name at the top of each code block, just like with GitHub Flavored Markdown.
 
-* **Out-of-the-box syntax highlighting** for [over 100 languages](https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers), no configuration required.
+  ## Get all reviews from a vendor
 
-* **Automatic, smoothly scrolling table of contents** on the far left of the page. As you scroll, it displays your current position in the document. It's fast, too. We're using Slate at TripIt to build documentation for our new API, where our table of contents has over 180 entries. We've made sure that the performance remains excellent, even for larger documents.
+list of all the vendors reviews created on your site by calling the WCMp vendors API and using the GET method.
 
-* **Let your users update your documentation for you** — By default, your Slate-generated documentation is hosted in a public GitHub repository. Not only does this mean you get free hosting for your docs with GitHub Pages, but it also makes it simple for other developers to make pull requests to your docs if they find typos or other problems. Of course, if you don't want to use GitHub, you're also welcome to host your docs elsewhere.
+```shell
+curl --location --request GET https:///wcmpdemos.com/demo1/wp-json/wcmp/v1/vendors/59/reviews'
 
-* **RTL Support** Full right-to-left layout for RTL languages such as Arabic, Persian (Farsi), Hebrew etc.
+  #The above command returns JSON structured like this:
 
-Getting started with Slate is super easy! Simply press the green "use this template" button above and follow the instructions below. Or, if you'd like to check out what Slate is capable of, take a look at the [sample docs](https://slatedocs.github.io/slate/).
+  ```json
+  {
+    "id": 59,
+    "rating_count": 1,
+    "avg_rating": "5.0",
+    "reviews_list": [
+      {
+        "id": 376,
+        "review_content": "amazing store",
+        "review_rating": 5,
+        "reviewer_id": "1",
+        "reviewer_name": "superadmin",
+        "reviewer_email": "abhirup@dualcube.com",
+        "reviewer_verified": false,
+        "date_created": "2022-03-30T06:47:35",
+        "_links": {
+          "self": [
+            {
+              "href": "http://wcmpdemos.com/demo1/wp-json/wcmp/v1/vendors/59/reviews/376"
+            }
+          ],
+          "collection": [
+            {
+              "href": "http://wcmpdemos.com/demo1/wp-json/wcmp/v1/vendors/59/reviews"
+            }
+          ],
+          "up": [
+            {
+              "href": "http://wcmpdemos.com/demo1/wp-json/wcmp/v1/vendors/59"
+            }
+          ]
+        }
+      }
+    ]
+  }
+  ```
+  list of all the vendors reviews created on your site by calling the WCMp vendors API and using the GET method.
 
-Getting Started with Slate
-------------------------------
+  ### HTTP Request
 
-To get started with Slate, please check out the [Getting Started](https://github.com/slatedocs/slate/wiki#getting-started)
-section in our [wiki](https://github.com/slatedocs/slate/wiki).
+  `GET [site_url]/wp-json/wcmp/v1/vendors/[vendor_id]/reviews`
 
-We support running Slate in three different ways:
-* [Natively](https://github.com/slatedocs/slate/wiki/Using-Slate-Natively)
-* [Using Vagrant](https://github.com/slatedocs/slate/wiki/Using-Slate-in-Vagrant)
-* [Using Docker](https://github.com/slatedocs/slate/wiki/Using-Slate-in-Docker)
+  ### Query Parameters
 
-Companies Using Slate
----------------------------------
+  Parameter  | Description
+  ---------  | -----------
+   vendor_id | Unique identifier for the vendor
+   review_id | Unique identifier for a review
 
-* [NASA](https://api.nasa.gov)
-* [Sony](http://developers.cimediacloud.com)
-* [Best Buy](https://bestbuyapis.github.io/api-documentation/)
-* [Travis-CI](https://docs.travis-ci.com/api/)
-* [Greenhouse](https://developers.greenhouse.io/harvest.html)
-* [WooCommerce](http://woocommerce.github.io/woocommerce-rest-api-docs/)
-* [Dwolla](https://docs.dwolla.com/)
-* [Clearbit](https://clearbit.com/docs)
-* [Coinbase](https://developers.coinbase.com/api)
-* [Parrot Drones](http://developer.parrot.com/docs/bebop/)
-* [CoinAPI](https://docs.coinapi.io/)
+  <aside class="success">
+  Remember — to add the proper site URL !
+  </aside>
 
-You can view more in [the list on the wiki](https://github.com/slatedocs/slate/wiki/Slate-in-the-Wild).
 
-Questions? Need Help? Found a bug?
---------------------
 
-If you've got questions about setup, deploying, special feature implementation in your fork, or just want to chat with the developer, please feel free to [start a thread in our Discussions tab](https://github.com/slatedocs/slate/discussions)!
 
-Found a bug with upstream Slate? Go ahead and [submit an issue](https://github.com/slatedocs/slate/issues). And, of course, feel free to submit pull requests with bug fixes or changes to the `dev` branch.
 
-Contributors
---------------------
 
-Slate was built by [Robert Lord](https://lord.io) while at [TripIt](https://www.tripit.com/). The project is now maintained by [Matthew Peveler](https://github.com/MasterOdin) and [Mike Ralphson](https://github.com/MikeRalphson).
 
-Thanks to the following people who have submitted major pull requests:
-
-- [@chrissrogers](https://github.com/chrissrogers)
-- [@bootstraponline](https://github.com/bootstraponline)
-- [@realityking](https://github.com/realityking)
-- [@cvkef](https://github.com/cvkef)
-
-Also, thanks to [Sauce Labs](http://saucelabs.com) for sponsoring the development of the responsive styles.
