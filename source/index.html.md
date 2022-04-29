@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Vendor Review
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
@@ -20,226 +20,79 @@ code_clipboard: true
 
 meta:
   - name: description
-    content: Documentation for the Kittn API
+    content: Documentation for the Vendor Review API
 ---
-
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+This API request help you retrieve all the vendor's review
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+  ## Get all reviews from a vendor
 
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+list of all the vendors reviews created on your site by calling the WCMp vendors API and using the GET method.
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
+curl --location --request GET https:///wcmpdemos.com/demo1/wp-json/wcmp/v1/vendors/59/reviews'
 
-```javascript
-const kittn = require('kittn');
+  #The above command returns JSON structured like this:
 
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
+  ```json
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "id": 59,
+    "rating_count": 1,
+    "avg_rating": "5.0",
+    "reviews_list": [
+      {
+        "id": 376,
+        "review_content": "amazing store",
+        "review_rating": 5,
+        "reviewer_id": "1",
+        "reviewer_name": "superadmin",
+        "reviewer_email": "abhirup@dualcube.com",
+        "reviewer_verified": false,
+        "date_created": "2022-03-30T06:47:35",
+        "_links": {
+          "self": [
+            {
+              "href": "http://wcmpdemos.com/demo1/wp-json/wcmp/v1/vendors/59/reviews/376"
+            }
+          ],
+          "collection": [
+            {
+              "href": "http://wcmpdemos.com/demo1/wp-json/wcmp/v1/vendors/59/reviews"
+            }
+          ],
+          "up": [
+            {
+              "href": "http://wcmpdemos.com/demo1/wp-json/wcmp/v1/vendors/59"
+            }
+          ]
+        }
+      }
+    ]
   }
-]
-```
+  ```
+  list of all the vendors reviews created on your site by calling the WCMp vendors API and using the GET method.
 
-This endpoint retrieves all kittens.
+  ### HTTP Request
 
-### HTTP Request
+  `GET [site_url]/wp-json/wcmp/v1/vendors/[vendor_id]/reviews`
 
-`GET http://example.com/api/kittens`
+  ### Query Parameters
 
-### Query Parameters
+  Parameter  | Description
+  ---------  | -----------
+   vendor_id | Unique identifier for the vendor
+   review_id | Unique identifier for a review
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+  <aside class="success">
+  Remember — to add the proper site URL !
+  </aside>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
 
-## Get a Specific Kitten
 
-```ruby
-require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
 
-```python
-import kittn
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
 
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
 
